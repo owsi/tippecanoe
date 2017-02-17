@@ -9,9 +9,9 @@ CXX := $(CXX)
 CFLAGS := $(CFLAGS)
 CXXFLAGS := $(CXXFLAGS) -std=c++11
 LDFLAGS := $(LDFLAGS)
-WARNING_FLAGS := -Wall -Wshadow -Wsign-compare
+WARNING_FLAGS := -Wall -Wextra -Weffc++ -Wshadow -Wsign-compare -Werror
 RELEASE_FLAGS := -O3 -DNDEBUG
-DEBUG_FLAGS := -O0 -DDEBUG -fno-inline-functions -fno-omit-frame-pointer
+DEBUG_FLAGS := -O0 -DDEBUG -fno-inline-functions -fno-omit-frame-pointer -fno-common
 
 ifeq ($(BUILDTYPE),Release)
 	FINAL_FLAGS := -g $(WARNING_FLAGS) $(RELEASE_FLAGS)

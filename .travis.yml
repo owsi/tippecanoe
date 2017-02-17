@@ -7,7 +7,7 @@ matrix:
     # debug+sanitized build
     - os: linux
       compiler: clang
-      env: CLANG_VERSION='3.9.1' BUILDTYPE=Debug ASAN_OPTIONS=detect_leaks=1:abort_on_error=1:check_initialization_order=1:detect_stack_use_after_return=1 CC="clang-3.9" CXX="clang++-3.9" CXXFLAGS="-fsanitize=address,undefined -fno-sanitize-recover=all" CFLAGS="-fsanitize=address,undefined -fno-sanitize-recover=all" LDFLAGS="-fsanitize=address,undefined"
+      env: CLANG_VERSION='3.9.1' BUILDTYPE=Debug ASAN_OPTIONS=detect_leaks=1:abort_on_error=1:check_initialization_order=1:detect_stack_use_after_return=1 CC="clang-3.9" CXX="clang++-3.9" CXXFLAGS="-fsanitize=address,undefined -fsanitize-address-use-after-scope -fno-sanitize-recover=all" CFLAGS="-fsanitize=address,undefined -fno-sanitize-recover=all" LDFLAGS="-fsanitize=address,undefined"
       addons:
         apt:
           sources: ['ubuntu-toolchain-r-test' ]
