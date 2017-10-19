@@ -147,7 +147,7 @@ Parallel processing will also be automatic if the input file is in Geobuf format
 
 ### Projection of input
 
- * `-s` _projection_ or `--projection=`_projection_: Specify the projection of the input data. Currently supported are `EPSG:4326` (WGS84, the default) and `EPSG:3857` (Web Mercator). In general you should use WGS84 for your input files if at all possible.
+ * `-s` _projection_ or `--projection=`_projection_: Specify the projection of the input data. Currently supported are `EPSG:4326` (WGS84, the default), `EPSG:3857` (Web Mercator) and `EPSG:3395` (Mercator). NOTE: 3395 expects the input to be WGS84 geojson, the output is 3395 in lieu of web-mercator 3857.  In general you should use WGS84 for your input files if at all possible.
 
 ### Zoom levels
 
