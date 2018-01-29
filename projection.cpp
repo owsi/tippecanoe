@@ -19,7 +19,7 @@ struct projection projections[] = {
 // The default is 3857
 struct tileprojection tileprojections[] = {
         {"EPSG:3857", epsg4326_to_3857, epsg3857_to_4326, "urn:ogc:def:crs:EPSG::3857"},
-        {"EPSG:3395", epsg4326_to_3395, epsg3395_to_4326, "urn:ogc:def:crs:EPSG::3395"},
+        {"EPSG:3395", epsg4326_to_3395, epsg3857_to_4326, "urn:ogc:def:crs:EPSG::3395"}, // using simpler 3857 for now
         {NULL, NULL},
 };
 
@@ -174,14 +174,20 @@ void epsg3857_to_4326(long long x, long long y, int zoom, double *lon, double *l
     unsigned long long n = 1LL << zoom;
     *lon = 360.0 * x / n - 180.0;
     *lat = atan(sinh(M_PI * (1 - 2.0 * y / n))) * 180.0 / M_PI;
+    fprintf(stdout, "\n\n\n***epsg3857_to_4326([%lld, %lld, %d]) yields [%.05f, %.05f] ***\n\n\n", x, y, zoom, *lon, *lat);
 }
 
 // This is an iterative transformation, valid to 8 decimal places
 void epsg3395_to_4326(long long x, long long y, int zoom, double *lon, double *lat) {
+    if (zoom < 0) {
+        zoom = 32;
+    }
     unsigned long long n = 1LL << zoom;
+    *lon = 360.0 * x / n - 180.0;
+
     double a = 6378137.0;
     double e = 0.081819190842622;
-    double circumference = 2.0 * M_PI * 6378137.0;
+    double circumference = 2.0 * M_PI * a;
     // Convert back to TMS from Google tile (flip y)
     long long ny = (n - 1) - y;
 
@@ -189,12 +195,10 @@ void epsg3395_to_4326(long long x, long long y, int zoom, double *lon, double *l
     res = res / n;
 
     // First unmap back to pixels
-    long long px = (x + 1) * 256;
     long long py = (ny + 1) * 256;
 
     // Now back to meters
     double originShift = circumference / 2.0;
-    double dx = px/res - originShift;
     double dy = py/res - originShift;
 
     // Now iterate to arrive at lat (radians)
@@ -221,7 +225,7 @@ void epsg3395_to_4326(long long x, long long y, int zoom, double *lon, double *l
 
     // Back to decimal degrees
     *lat = tlat * (180.0/M_PI);
-    *lon = (dx/a) * (180.0/M_PI);
+    fprintf(stdout, "\n\n\n***epsg3395_to_4326([%lld, %lld, %d]) yields [%.05f, %.05f] ***\n\n\n", x, y, zoom, *lon, *lat);
 }
 
 void set_projection_or_exit(const char *optarg) {
