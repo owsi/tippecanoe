@@ -2178,6 +2178,9 @@ int main(int argc, char **argv) {
 		{"Projection of input", 0, 0, 0},
 		{"projection", required_argument, 0, 's'},
 
+		{"Projection of tiles", 0, 0, 0},
+		{"tileprojection", required_argument, 0, 'O'},
+
 		{"Zoom levels", 0, 0, 0},
 		{"maximum-zoom", required_argument, 0, 'z'},
 		{"minimum-zoom", required_argument, 0, 'Z'},
@@ -2514,6 +2517,10 @@ int main(int argc, char **argv) {
 		case 's':
 			set_projection_or_exit(optarg);
 			break;
+
+        case 'O':
+            set_output_projection_or_exit(optarg);
+            break;
 
 		case 'S':
 			simplification = atof(optarg);
