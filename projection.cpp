@@ -174,7 +174,7 @@ void epsg3857_to_4326(long long x, long long y, int zoom, double *lon, double *l
     unsigned long long n = 1LL << zoom;
     *lon = 360.0 * x / n - 180.0;
     *lat = atan(sinh(M_PI * (1 - 2.0 * y / n))) * 180.0 / M_PI;
-    fprintf(stdout, "\n\n\n***epsg3857_to_4326([%lld, %lld, %d]) yields [%.05f, %.05f] ***\n\n\n", x, y, zoom, *lon, *lat);
+//    fprintf(stdout, "\n\n\n***epsg3857_to_4326([%lld, %lld, %d]) yields [%.05f, %.05f] ***\n\n\n", x, y, zoom, *lon, *lat);
 }
 
 // This is an iterative transformation, valid to 8 decimal places
@@ -225,7 +225,7 @@ void epsg3395_to_4326(long long x, long long y, int zoom, double *lon, double *l
 
     // Back to decimal degrees
     *lat = tlat * (180.0/M_PI);
-    fprintf(stdout, "\n\n\n***epsg3395_to_4326([%lld, %lld, %d]) yields [%.05f, %.05f] ***\n\n\n", x, y, zoom, *lon, *lat);
+//    fprintf(stdout, "\n\n\n***epsg3395_to_4326([%lld, %lld, %d]) yields [%.05f, %.05f] ***\n\n\n", x, y, zoom, *lon, *lat);
 }
 
 void set_projection_or_exit(const char *optarg) {
